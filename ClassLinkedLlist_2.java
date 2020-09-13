@@ -7,7 +7,7 @@ package codingLecture;
 class LinkedList {
 	Node header;
 	
-	public static class Node {
+	public class Node {
 		int data;
 		Node next = null;
 		

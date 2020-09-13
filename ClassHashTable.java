@@ -25,8 +25,25 @@ public class ClassHashTable {
 }
 
 class HashTable {
+	class Node {
+		String key;
+		String value;
+		
+		public Node(String key, String value) {
+			this.key = key;
+			this.value = value;
+		}
+		
+		public String value() {
+			return value;
+		}
+		
+		public void value (String value) {
+			this.value = value;
+		}
+	}
 	// 데이터를 저장할 링크드리스트를 선언한다
-	LinkedList<Node3>[] data;
+	LinkedList<Node>[] data;
 
 	// 배열 방도 미리 만들어 놓는다
 	HashTable(int size) {
@@ -51,7 +68,7 @@ class HashTable {
 	}
 
 	// 3. 키를 이용해 배열 방에서 노드를 통해 해당 데이터를 가져오기 위한 메서드
-	public Node3 searchKey(LinkedList<Node3> list, String key) {
+	public Node searchKey(LinkedList<Node> list, String key) {
 		// 노드가 널이면 널을 반환하고
 		if (list == null) {
 			return null;
@@ -60,9 +77,9 @@ class HashTable {
 		// 배열 방에 있는 링크드리스트가 돌면서
 		// 노드의 키가 검색하는 키와 같은지를 확인한다
 		// 같으면 노드 값을 반환한다.
-		for (Node3 node3 : list) {
-			if (node3.getKey().equals(key)) {
-				return node3;
+		for (Node Node : list) {
+			if (Node.key.equals(key)) {
+				return Node;
 			}
 		}
 		// 같은 게 없으면 null을 반환
@@ -78,25 +95,25 @@ class HashTable {
 		// 배열 방에 있는 데이터를 가져와서 링크드리스트에 넣는다
 		
 		System.out.println(key + ", hashcode(" + hashcode + "), index(" + index + ")");
-		LinkedList<Node3> list = data[index];
+		LinkedList<Node> list = data[index];
 		
 		// 배열방이 없으면
 		if (list == null) {
 			// 링크드리스트를 생성한다
-			list = new LinkedList<Node3>();
+			list = new LinkedList<Node>();
 			// 해당 리스트를 배열방에 넣어준다
 			data[index] = list;
 		}
 		// 배열 방에 혹시 기존의 해당 키로 데이터를 가졌는지 노드를 받아온다
-		Node3 node3 = searchKey(list, key);
+		Node Node = searchKey(list, key);
 		// 데이터가 없으면
-		if(node3 == null) {
+		if(Node == null) {
 			// 노드 객체를 생성해서 리스트에 추가한다
-			list.addLast(new Node3(key, value));
+			list.addLast(new Node(key, value));
 		} else {
 			// 노드가 널이 아닌 경우에는 해당 노드의 값이 대체해주는 걸로 
 			// 중복키를 처리한다. 
-			node3.setValue(value);
+			Node.value(value);
 		}
 	}
 	
@@ -107,40 +124,12 @@ class HashTable {
 		// 해쉬코드를 이용해서 배열방 인덱스 생성
 		int index = convertToIndex(hashcode);
 		// 배열 방에 있는 데이터를 가져와서 링크드리스트에 넣는다
-		LinkedList<Node3> list = data[index];
+		LinkedList<Node> list = data[index];
 		// 배열 방에 혹시 기존의 해당 키로 데이터를 가졌는지 노드를 받아온다
-		Node3 node3 = searchKey(list, key);
+		Node Node = searchKey(list, key);
 		
 		// 값이 없으면 없다는 문자열을 표시, 아니면 값을 반환한다
-		return node3 == null ? "Not found" : node3.getValue();
+		return Node == null ? "Not found" : Node.value();
 		
 	}
-}
-
-class Node3 {
-	String key;
-	String value;
-
-	public Node3(String key, String value) {
-		super();
-		this.key = key;
-		this.value = value;
-	}
-
-	public String getKey() {
-		return key;
-	}
-
-	public void setKey(String key) {
-		this.key = key;
-	}
-
-	public String getValue() {
-		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
-	}
-
 }
